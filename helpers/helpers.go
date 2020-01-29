@@ -73,6 +73,7 @@ func Min(a, b int) int {
 func Odd(n int) bool {
 	return n&1 == 1
 }
+<<<<<<< HEAD
 
 // Gcd find the greatest common factor of 2 integers.
 // a is always the largest number.
@@ -133,3 +134,5 @@ func Fib(n int) int {
 	}
 	return f
 }
+=======
+>>>>>>> a7bcd74b6a7cee0a13f058c3d2320e1a71ca9ae6
