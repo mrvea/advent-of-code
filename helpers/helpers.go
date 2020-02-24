@@ -3,10 +3,10 @@ package helpers
 import "fmt"
 
 // XY coor struct to hold the xy of possition and value(owner in this instance)
-type XY struct{ x, y int }
+type XY struct{ X, Y int }
 
-func (xy *XY) withOffset(offsets ...int) *XY {
-	x, y := xy.x, xy.y
+func (xy *XY) WithOffset(offsets ...int) *XY {
+	x, y := xy.X, xy.Y
 	for i, n := range offsets {
 		switch i {
 		case 0:
@@ -22,7 +22,7 @@ func (xy *XY) withOffset(offsets ...int) *XY {
 }
 
 func (xy *XY) String() string {
-	return fmt.Sprintf("(%d, %d)", xy.x, xy.y)
+	return fmt.Sprintf("(%d, %d)", xy.X, xy.Y)
 }
 
 // NewXY creates a new xy coor object
@@ -46,7 +46,7 @@ func Max(a, b int) int {
 
 // ManhattanDistance finds right angle distance between to points.
 func ManhattanDistance(a, b *XY) uint {
-	return uint(Abs(a.x-b.x) + Abs(a.y-b.y))
+	return uint(Abs(a.Y-b.X) + Abs(a.Y-b.Y))
 }
 
 // Pair finds if 2 runes have Upper to Lower case relation
@@ -73,7 +73,6 @@ func Min(a, b int) int {
 func Odd(n int) bool {
 	return n&1 == 1
 }
-<<<<<<< HEAD
 
 // Gcd find the greatest common factor of 2 integers.
 // a is always the largest number.
@@ -134,5 +133,3 @@ func Fib(n int) int {
 	}
 	return f
 }
-=======
->>>>>>> a7bcd74b6a7cee0a13f058c3d2320e1a71ca9ae6
