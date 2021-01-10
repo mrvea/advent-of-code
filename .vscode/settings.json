@@ -1,3 +1,27 @@
 {
+    "go.formatTool": "goimports",
+    "go.testFlags": [
+        "-v"
+    ],
+    "go.lintOnSave": "file",
+    "[go]": {
+        "editor.codeActionsOnSave": {
+           "source.organizeImports": false
+        }
+    },
     "go.inferGopath": false
+    
+    // "go.languageServerExperimentalFeatures": {
+    //     "autoComplete": true,
+    //     "documentSymbols": true,
+    //     "findReferences": true,
+    //     "format": false,
+    //     "goToDefinition": true,
+    //     "goToTypeDefinition": true,
+    //     "hover": true,
+    //     "signatureHelp": true,
+    //     "rename": true,
+    //     "workspaceSymbols": true,
+    //     "diagnostics": true, // for diagnostics as you type
+    //    }
 }

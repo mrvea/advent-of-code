@@ -120,6 +120,7 @@ func Pow(x, e int64) int64 {
 	return val
 }
 
+// Fib makes a fibonacci number
 func Fib(n int) int {
 	f := 1
 	p := 1

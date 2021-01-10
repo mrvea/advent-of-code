@@ -1,3 +1,3 @@
-module github.com/mrvea/adventOfCode-2018
+module advent-of-code
 
-go 1.12
+go 1.15
