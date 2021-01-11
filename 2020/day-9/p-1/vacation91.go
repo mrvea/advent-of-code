@@ -41,8 +41,8 @@ func SubMain(args ...string) {
 	total := 0
 	// insts := make([]*Instruction, 0)
 
-	preamble := make(map[int]struct{})
-	skip := false
+	preamble := make([]int, 0)
+
 	for s.Scan() {
 		fmt.Println(s.Text())
 		num, err := strconv.Atoi(s.Text())
@@ -50,15 +50,15 @@ func SubMain(args ...string) {
 			log.Panic(err)
 		}
 
-		if !skip && Invalid(num, preamble) {
+		if len(preamble) >= preableNumber && Invalid(num, preamble, preableNumber) {
 			total = num
 			break
 		}
-		if len(preamble) < preableNumber {
+		preamble = append(preamble, num)
+		// if len(preamble) < preableNumber {
+		// 	continue
+		// }
 
-			continue
-		}
-		preamble[num] = struct{}{}
 		// bagName, contains := processDirections(s.Text())
 
 	}
@@ -66,14 +66,23 @@ func SubMain(args ...string) {
 	fmt.Println("total: ", total)
 }
 
-func Invalid(num int, preamble map[int]struct{}) bool {
-	for i := 1; i < num; i++ {
-		if _, ok := preamble[i]; ok {
-			if _, ok = preamble[num-i]; ok {
-				return false
-			}
-
+func Invalid(num int, preamble []int, span int) bool {
+	l := len(preamble)
+	end := l - span
+	for i := l - 1; i > end; i-- {
+		s := num - preamble[i]
+		if in(preamble[end:i], s) {
+			return false
 		}
 	}
 	return true
+}
+
+func in(pool []int, needle int) bool {
+	for _, v := range pool {
+		if v == needle {
+			return true
+		}
+	}
+	return false
 }

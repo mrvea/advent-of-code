@@ -1,4 +1,4 @@
-package vacation92
+package vacation102
 
 import (
 	"bufio"
@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	day           = "9"
+	day           = "10"
 	basePath      = "2020/day-" + day + "/"
 	inputName     = "input.txt"
 	testInputName = "test_" + inputName
