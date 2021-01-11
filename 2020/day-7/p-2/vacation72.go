@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 const (
@@ -12,10 +13,6 @@ const (
 	basePath      = "2020/day-" + day + "/"
 	inputName     = "input.txt"
 	testInputName = "test_" + inputName
-	rowMax        = 127.0
-	rowMin        = 0.0
-	columnMax     = 7.0
-	columnMin     = 0.0
 )
 
 /**
@@ -26,7 +23,13 @@ func SubMain(args ...string) {
 	filePath := basePath + inputName
 	if len(args) > 0 && args[0] == "test" {
 		fmt.Println("Running test file...")
-		filePath = basePath + testInputName
+		if len(args) > 1 {
+
+			filePath = basePath + args[1]
+		} else {
+
+			filePath = basePath + testInputName
+		}
 	}
 	fmt.Printf("filePath: %s\n", filePath)
 	f, err := os.Open(filePath)
@@ -38,19 +41,73 @@ func SubMain(args ...string) {
 	s := bufio.NewScanner(f)
 
 	total := 0
-	ans := make(map[rune]struct{})
+	bags := make(map[string]map[string]int)
+	sbagName := "shiny gold"
 	for s.Scan() {
-		raw := s.Text()
-		if raw == "" {
-			total += len(ans)
-			ans = make(map[rune]struct{})
+		fmt.Println(s.Text())
+		bagName, contains := processDirections(s.Text())
+		// fmt.Printf("bag: %s, contains: ", bagName)
+		// fmt.Println(contains)
+		// if contains == nil || bagName == sbagName {
+		// 	continue
+		// }
+		bags[bagName] = contains
+	}
+	total = containedBags(sbagName, bags, make(map[string]int))
+	fmt.Println("total: ", total)
+}
+
+func containedBags(bagName string, pool map[string]map[string]int, cache map[string]int) int {
+	// fmt.Println(bagName, " => ")
+	bag, ok := pool[bagName]
+	if !ok {
+		log.Panicf("bag named %s not found", bagName)
+	}
+	delete(pool, bagName)
+	if bag == nil {
+		return 0
+	}
+	total := 0
+	for name, value := range bag {
+		if c, ok := cache[name]; ok {
+			total += value + c*value
 			continue
 		}
-		for _, char := range raw {
-			ans[char] = struct{}{}
-		}
+		count := containedBags(name, pool, cache)
+		cache[name] = count
+		// if count != 0 {
+		total += value + count*value
+		// }
 	}
-	total += len(ans)
+	return total
+}
 
-	fmt.Println("total: ", total)
+func processDirections(raw string) (string, map[string]int) {
+	var key, containRaw string
+	parts := strings.Split(raw, " bags contain ")
+	key, containRaw = parts[0], parts[1]
+	// var shade, color string
+	// _, err := fmt.Sscanf(key, "%s %s bags", &shade, &color)
+	// if err != nil {
+	// 	log.Panic(err)
+	// }
+	// fmt.Printf("key: %s, contains: %s\n", key, containRaw)
+	if containRaw == "no other bags." {
+		return key, nil
+	}
+
+	parts = strings.Split(containRaw, ", ")
+	containsMap := make(map[string]int)
+	for _, str := range parts {
+		var shade, color string
+		var count int
+		// fmt.Printf("part: %s\n", str)
+		_, err := fmt.Sscanf(str, "%d %s %s bag", &count, &shade, &color)
+		if err != nil {
+			log.Panic(err)
+		}
+		containsMap[shade+" "+color] = count
+	}
+
+	return key, containsMap
 }

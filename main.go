@@ -2,22 +2,27 @@ package main
 
 import (
 	"advent-of-code/global"
+	"fmt"
 	"os"
 
-	"advent-of-code/2020/day-1/p-1"
-	"advent-of-code/2020/day-1/p-2"
-	"advent-of-code/2020/day-2/p-1"
-	"advent-of-code/2020/day-2/p-2"
-	"advent-of-code/2020/day-3/p-1"
-	"advent-of-code/2020/day-3/p-2"
-	"advent-of-code/2020/day-4/p-1"
-	"advent-of-code/2020/day-4/p-2"
-	"advent-of-code/2020/day-5/p-1"
-	"advent-of-code/2020/day-5/p-2"
-	"advent-of-code/2020/day-6/p-1"
-	"advent-of-code/2020/day-6/p-2"
-	"advent-of-code/2020/day-7/p-1"
-	"advent-of-code/2020/day-7/p-2"
+	vacation11 "advent-of-code/2020/day-1/p-1"
+	vacation12 "advent-of-code/2020/day-1/p-2"
+	vacation21 "advent-of-code/2020/day-2/p-1"
+	vacation22 "advent-of-code/2020/day-2/p-2"
+	vacation31 "advent-of-code/2020/day-3/p-1"
+	vacation32 "advent-of-code/2020/day-3/p-2"
+	vacation41 "advent-of-code/2020/day-4/p-1"
+	vacation42 "advent-of-code/2020/day-4/p-2"
+	vacation51 "advent-of-code/2020/day-5/p-1"
+	vacation52 "advent-of-code/2020/day-5/p-2"
+	vacation61 "advent-of-code/2020/day-6/p-1"
+	vacation62 "advent-of-code/2020/day-6/p-2"
+	vacation71 "advent-of-code/2020/day-7/p-1"
+	vacation72 "advent-of-code/2020/day-7/p-2"
+	vacation81 "advent-of-code/2020/day-8/p-1"
+	vacation82 "advent-of-code/2020/day-8/p-2"
+	vacation91 "advent-of-code/2020/day-9/p-1"
+	vacation92 "advent-of-code/2020/day-9/p-2"
 )
 
 var subPackages = map[string]global.Runnable{
@@ -35,6 +40,10 @@ var subPackages = map[string]global.Runnable{
 	"2020/day-6/p-1": vacation61.SubMain,
 	"2020/day-7/p-2": vacation72.SubMain,
 	"2020/day-7/p-1": vacation71.SubMain,
+	"2020/day-8/p-2": vacation82.SubMain,
+	"2020/day-8/p-1": vacation81.SubMain,
+	"2020/day-9/p-2": vacation92.SubMain,
+	"2020/day-9/p-1": vacation91.SubMain,
 }
 
 func init() {
@@ -51,6 +60,8 @@ func main() {
 	}
 	if fn, ok := global.GetAction(name); ok {
 		fn(args[1:]...)
+		return
 	}
+	fmt.Printf("cound not find %s in registered methods", name)
 	// if ()
 }
