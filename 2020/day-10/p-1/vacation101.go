@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 )
 
 const (
@@ -21,11 +20,9 @@ const (
 func SubMain(args ...string) {
 	fmt.Println("vacation" + day + ".1 starting exectution...")
 	filePath := basePath + inputName
-	preableNumber := 25
 	if len(args) > 0 && args[0] == "test" {
 		fmt.Println("Running test file...")
 		filePath = basePath + testInputName
-		preableNumber = 5
 	}
 
 	fmt.Printf("filePath: %s\n", filePath)
@@ -39,42 +36,11 @@ func SubMain(args ...string) {
 	s := bufio.NewScanner(f)
 
 	total := 0
-	preamble := make([]int, 0)
 
 	for s.Scan() {
 		fmt.Println(s.Text())
-		num, err := strconv.Atoi(s.Text())
-		if err != nil {
-			log.Panic(err)
-		}
 
-		if len(preamble) >= preableNumber && Invalid(num, preamble, preableNumber) {
-			total = num
-			break
-		}
-		preamble = append(preamble, num)
 	}
 
 	fmt.Println("total: ", total)
-}
-
-func Invalid(num int, preamble []int, span int) bool {
-	l := len(preamble)
-	end := l - span
-	for i := l - 1; i > end; i-- {
-		s := num - preamble[i]
-		if in(preamble[end:i], s) {
-			return false
-		}
-	}
-	return true
-}
-
-func in(pool []int, needle int) bool {
-	for _, v := range pool {
-		if v == needle {
-			return true
-		}
-	}
-	return false
 }
